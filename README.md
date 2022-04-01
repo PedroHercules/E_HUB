@@ -9,6 +9,6 @@ Uma plataforma que funionará como um Hub de eventos online, no qual os usuário
 - Tipo de vento (Ex: Tecnologia)
 
 ## Tecnologias utilizadas
-- React
-- Nodejs
-- MySql
+- [React](https://reactjs.org)
+- [Nodejs](https://nodejs.org/en/)
+- [MySql](https://www.mysql.com)
