@@ -47,6 +47,11 @@ main a{
   text-decoration: none;
 }
 
+form span{
+  color: red;
+  margin: -2% 0 2% 0;
+}
+
 @media screen and (max-width: 768px){
   aside{
     display: none;
