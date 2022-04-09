@@ -1,0 +1,129 @@
+#create-event{
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+main{
+  margin: 5% auto;
+  width: 70%;
+  text-align: center;
+}
+
+form{
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+form input{
+  width: 100%;
+}
+
+form input[type='file']{
+  display: none;
+}
+
+form label{
+  align-self: flex-start;
+}
+
+#file-label {
+  display: flex;
+  flex-direction: row;
+  height: 65px;
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 3%;
+  align-items: flex-start;
+  overflow-y: hidden;
+}
+
+#file-label label{
+  position: absolute;
+  width: 15%;
+  height: 61px;
+  padding: 22px 10px;
+  text-align: center;
+  color: #fff;
+  background-color: blue;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 10px 0 0 10px;
+  overflow-y: hidden;
+}
+
+#file-label p{
+  position: relative;
+  left: 23%;
+  top: 30%;
+  color: #8e8e8e;
+}
+
+form input#description{
+  height: 70px;
+}
+
+form textarea{
+  width: 100%;
+  height: 120px;
+  resize: vertical;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  outline: none;
+}
+
+
+.info-event{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 1px solid #3333;
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  margin-bottom: 3%;
+  border-radius: .5rem;
+}
+
+.info-event div{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.info-event div input{
+  width: 70%;
+}
+
+.info-event div p{
+  overflow: hidden;
+}
+
+#button-form{
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: space-between;
+  margin: 5% 0;
+}
+
+#btn-cancel{
+  height: 40px;
+  width: 200px;
+  padding: 7px 10px;
+  border-radius: .3rem;
+  font-size: 15pt;
+  font-weight: bold;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+  overflow: hidden;
+}
+
+

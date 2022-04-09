@@ -5,12 +5,12 @@ import * as yup from 'yup';
 import { Link } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 
-import { Context } from '../../context/Context.js';
+import { Context } from '../context/Context.js';
 
-import '../../styles/Login.css';
+import '../styles/Login.css';
 
-import { Button } from '../../components/Button';
-import { BannerAside } from '../../components/BannerAside';
+import { Button } from '../components/Button';
+import { BannerAside } from '../components/BannerAside';
 
 
 const schema = yup.object().shape({
@@ -41,7 +41,7 @@ export function Login(){
   return (
     <div id="page-auth">
       <ToastContainer />
-      <main>
+      <main id="info-user">
         <div id="title-login">
           <h1>E_HUB</h1>
           <h3>Acesse sua conta</h3>
@@ -67,7 +67,7 @@ export function Login(){
         <br />
         <p>Ainda não possui uma conta? <Link to="/registerUser">Crie uma conta</Link></p>
         <br />
-        <p>Esqueceu a senha? <Link to="/login">Altere aqui</Link></p>
+        {/* <p>Esqueceu a senha? <Link to="/login">Altere aqui</Link></p> */}
       </main>
 
       <BannerAside />

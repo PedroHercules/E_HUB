@@ -1,0 +1,32 @@
+header{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 20px;
+  background: #1A8FDD;
+  height: 90px;
+  border-radius: .5rem;
+  color: #fff;
+}
+
+#link{
+  text-decoration: none;
+  color: #fff;
+}
+
+header h1 {
+  font-size: 30pt;
+  width: 200px;
+}
+
+#profile{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  width: 10%;
+}
+
+#profile p{
+  margin-top: 10%;
+}
+

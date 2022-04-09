@@ -1,8 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import { Home } from './pages/Home/Home';
-import { Login } from "./pages/Login/Login";
-import Register from "./pages/RegisterUser/Register";
+import { Home } from './pages/Home';
+import { Login } from "./pages/Login";
+import Register from "./pages/Register";
+import CreateEvent from './pages/CreateEvent';
 
 import { AuthProvider } from "./context/Context";
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={ <Home /> }/>
           <Route path='/login' element={ <Login /> }/>
           <Route path='/registerUser' element={ <Register /> }/>
+          <Route path='/create-event'element={ <CreateEvent /> }/>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

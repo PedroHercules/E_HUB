@@ -3,6 +3,8 @@ import User from '../database/User.js';
 import { Op } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import mailer from '../modules/mailer.js';
 
 import 'dotenv/config';
 
@@ -94,6 +96,88 @@ router.post('/authenticate', async (req, res) => {
       error: err
     })
   }
+});
+
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+    
+  try {
+    const user = await User.findOne({ where: { email:email } });
+    if(!user){
+      return res.status(400).send({error: 'Este e-mail não está cadastrado no sistema'});
+    }
+
+    const token = crypto.randomBytes(20).toString('hex');
+
+    const now = new Date();
+    now.setHours(now.getHours() + 1);
+
+    await User.update(
+      {
+        passwordResetToken: token,
+        passwordResetExpires: now
+      },
+      {
+        where: {
+          id: user.id
+        }
+      }
+    );
+
+    mailer.sendMail({
+      subject: 'Alteração de senha',
+      to: email,
+      from: 'pedroherculesdantas@gmail.com',
+      template: 'auth/forgot-password',
+      context: { 
+        nickname: user.nickname,
+        token: token
+      }
+    }, (err) => {
+      if (err){
+        console.log(err)
+        return res.status(400).send({ error: 'Erro ao enviar e-mail' });
+      }
+      return res.send();
+    });
+    
+  } catch (err) {
+    console.log(err)
+    return res.status(400).send({
+      error: err
+    });
+  }
+});
+
+router.post('/reset-password', async (req, res) => {
+  const { userId, token, password } = req.body;
+
+  const user = await User.findOne({ where: {id: userId} });
+
+  if (!user) {
+    return res.status(400).send({error: 'Usuário não existe'});
+  }
+
+  if (token !== user.passwordResetToken){
+    return res.status(400).send({ error: 'Token inválido' });
+  }
+
+  const now = new Date();
+
+  if (now > user.passwordResetExpires){
+    return res.status(400).send({ error: 'Token expirou'});
+  }
+
+  await user.update(
+    {
+      password: password,
+    },
+    {
+      where: { id: user.id }
+    }
+  );
+
+  res.send();
 });
 
 export default router;

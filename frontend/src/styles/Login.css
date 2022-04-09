@@ -3,7 +3,7 @@
   flex-direction: row;
 }
 
-main{
+#info-user{
   flex: 3;
   display: flex;
   width: 40%;
@@ -24,7 +24,7 @@ h1{
   font-size: 48px;
 }
 
-main form{
+#info-user form{
   display: flex;
   flex-direction: column; 
   margin: 0 auto;
@@ -43,7 +43,7 @@ form input{
   border: 2px solid #ccc;
 }
 
-main a{
+#info-user a{
   text-decoration: none;
 }
 
@@ -56,13 +56,13 @@ form span{
   aside{
     display: none;
   }
-  main {
+  #info-user {
     float: none;
     margin: 0 auto;
     width: 80%;
   }
 
-  main form{
+  #info-user form{
     width: 100%;
     padding: 20px;
   }

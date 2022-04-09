@@ -17,10 +17,25 @@ const User = connection.define('users', {
   password: {
     type: Sequelize.STRING,
     allownull: false
+  },
+
+  passwordResetToken: {
+    type: Sequelize.STRING,
+    select: false
+  },
+
+  passwordResetExpires: {
+    type: Sequelize.DATE,
+    select: false
   }
 });
 
 User.beforeCreate( async (user) => {
+  const hash = await bcrypt.hash(user.password, 10);
+  user.password = hash;
+});
+
+User.beforeUpdate( async (user) => {
   const hash = await bcrypt.hash(user.password, 10);
   user.password = hash;
 });

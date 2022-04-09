@@ -7,5 +7,10 @@
   font-size: 15pt;
   font-weight: bold;
   cursor: pointer;
-  border-color: #1A8FDD;
+  border: 1px solid #1A8FDD;
+}
+
+#btn-cancel{
+  background-color: red;
+  border-color: red;
 }
