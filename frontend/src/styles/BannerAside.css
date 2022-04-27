@@ -1,4 +1,4 @@
-aside{
+#banner{
   flex: 4;
   width: 50%;
   background: #1A8FDD;
@@ -9,12 +9,12 @@ aside{
   text-align: center;
 }
 
-aside img{
+#banner img{
   margin-top: 10%;
   width: 100%;
 }
 
-aside h2{
+#banner h2{
   margin-top: 3%;
   color: #fff;
 }

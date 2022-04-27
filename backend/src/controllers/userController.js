@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import User from '../database/User.js';
+import Event from '../database/Event.js';
 import { Op } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -97,6 +98,33 @@ router.post('/authenticate', async (req, res) => {
     })
   }
 });
+
+router.get('/profile', async (req, res) => {
+
+  try {
+    const userId = req.body.user;
+    
+    const user = await User.findOne({ 
+        include: [
+          {
+            model: Event,
+            where: {userId: userId}
+          }
+        ]
+      },
+      {where: { id: userId} }
+      );
+    if (!user) {
+      return res.status(400).send({ error: 'Erro ao buscar usuário' });
+    }
+    return res.status(200).send({ user });
+  } catch (err) {
+    return res.status(400).send({ error: 'Ocorreu um erro ao carregar perfil' });
+  }
+  
+});
+
+
 
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;

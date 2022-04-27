@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from 'react-toastify';
 
 import { BannerAside } from "../components/BannerAside";
-import { Button } from "../components/Button";
+import Button from "../components/Button";
 
 import { Context } from '../context/Context.js';
 

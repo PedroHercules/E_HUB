@@ -2,6 +2,7 @@ import { Sequelize } from 'sequelize';
 import connection  from './database.js';
 import bcrypt  from 'bcryptjs';
 
+
 const User = connection.define('users', {
   nickname: {
     type: Sequelize.STRING,
@@ -39,6 +40,8 @@ User.beforeUpdate( async (user) => {
   const hash = await bcrypt.hash(user.password, 10);
   user.password = hash;
 });
+
+
 
 User.sync( {force: false} );
 export default User;

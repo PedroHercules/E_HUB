@@ -9,7 +9,7 @@ import { Context } from '../context/Context.js';
 
 import '../styles/Login.css';
 
-import { Button } from '../components/Button';
+import Button from '../components/Button';
 import { BannerAside } from '../components/BannerAside';
 
 

@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import connection from './database.js';
+import User from './User.js';
 
 const Event = connection.define('events', {
   title: {
@@ -12,7 +13,7 @@ const Event = connection.define('events', {
     allownull: false
   },
   about: {
-    type: Sequelize.STRING,
+    type: Sequelize.TEXT,
     allownull: false
   },
   dateBegin: {
@@ -23,11 +24,6 @@ const Event = connection.define('events', {
     type: Sequelize.STRING,
     allownull: false
   },
-  time: {
-    type: Sequelize.TIME,
-    defaultValue: '00:00:00',
-    allownull: false
-  },
   type: {
     type: Sequelize.STRING,
     allownull: false
@@ -36,11 +32,18 @@ const Event = connection.define('events', {
     type: Sequelize.STRING,
     allownull: false
   },
+  link: {
+    type: Sequelize.STRING,
+    allownull: false
+  },
   image: {
-    type: Sequelize.BLOB,
+    type: Sequelize.STRING,
     allownull: false
   }
 });
+
+User.hasMany(Event);
+Event.belongsTo(User);
 
 Event.sync({ force: false });
 

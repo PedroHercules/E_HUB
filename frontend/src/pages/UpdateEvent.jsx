@@ -1,9 +1,9 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
@@ -24,51 +24,53 @@ const schema = yup.object().shape({
   image: yup.mixed().required('Selecione uma imagem')
 }).required();
 
-export default function CreateEvent(){
-  const { handleCreateEvent, user } = useContext(Context);
+export default function CreateEvent(props){
+  const location = useLocation();
+  const event  = location.state;
+  const { handleUpdateEvent } = useContext(Context);
+  
   const { register, handleSubmit, setError, clearErrors, formState: {errors} } = useForm({
     resolver: yupResolver(schema)
   });
 
   const navigate = useNavigate();
-
-  const registerEvent = async (data) => {
+  
+  const updateEvent = async (data) => {
     const eventData = {
-      "title": data.title,
-      "description": data.description,
-      "about": data.about,
-      "dateBegin": data.dateBegin,
-      "dateEnd": data.dateEnd,
-      "local": data.local,
-      "link": data.link,
-      "type": data.type,
-      "image": data.image,
-      "user": user.id
+      "event": data
     }
 
-    console.log(eventData)
-
-    await handleCreateEvent(eventData)
+    await handleUpdateEvent(eventData)
       .catch(response => {
         setError('apiError', {message: response.error});
         toast.error(response.error);
       });
 
-
   }
 
+  function setDate(date){
+    date = date.toString().replace('Z','');
+    date = new Date(`${date}+03:00`).toISOString().replace('Z','');
+    return date;
+  }
+  
+  
   return (
     <div id="create-event">
       <ToastContainer />
       <Header />
       <main>
-        <h1>Crie seu Evento</h1>
-        <form onSubmit={handleSubmit(registerEvent)}>
+        <h1>Editar Evento</h1>
+        <form onSubmit={handleSubmit(updateEvent)}>
+          <input type="number" name="userId" defaultValue={event.userId} {...register('userId')} hidden/>
+          <input type="text" name="user" defaultValue={event.user} {...register('user')} hidden/>
+          <input type="number" name="id" defaultValue={event.id} {...register('id')} hidden/>
           <label>Título</label>
           <input 
             type="text" 
             name="title" 
             placeholder="Ex: Tecnologias mais usadas no desenvolvimento web"
+            defaultValue={event.title}
             {...register('title')}
             />
             {errors.title && toast.error(errors.title.message)}
@@ -78,6 +80,7 @@ export default function CreateEvent(){
             id="description" 
             name="description" 
             placeholder="Coloque aqui uma breve descrição do seu evento"
+            defaultValue={event.description}
             {...register('description')}
             />
             {errors.description && <span>{errors.description.message}</span>}
@@ -86,23 +89,24 @@ export default function CreateEvent(){
             id="about" 
             name="about" 
             placeholder="Coloque aqui uma descrição mais detalhada do evento"
+            defaultValue={event.about}
             {...register('about')}
             />
             {errors.about && <span>{errors.about.message}</span>}
           <br />
           <label>Link do evento</label>
-          <input type="url" name="link" placeholder="Coloque o link do evento aqui" {...register('link')} />
+          <input type="url" name="link" placeholder="Coloque o link do evento aqui" {...register('link')} defaultValue={event.link}/>
           <label>Link da imagem</label>
-          <input type="url" name="image" placeholder="Coloque o link de uma imagem" {...register('image')} />
+          <input type="url" name="image" placeholder="Coloque o link de uma imagem" {...register('image')} defaultValue={event.image}/>
           <div className="info-event">
             <div id="date-inicio">
               <p>Data de início</p>
-              <input type="datetime-local" name="dateBegin" {...register('dateBegin')}/>
+              <input type="datetime-local" name="dateBegin" {...register('dateBegin')} defaultValue={setDate(event.dateBegin)} />
               {errors.dateBegin && <span>{errors.dateBegin.message}</span>}
             </div>
             <div id="date-fim">
               <p>Data final</p>
-              <input type="datetime-local" name="dateEnd" {...register('dateEnd')}/>
+              <input type="datetime-local" name="dateEnd" {...register('dateEnd')} defaultValue={setDate(event.dateEnd)}/>
               {errors.dateEnd && <span>{errors.dateEnd.message}</span>}
             </div>
           </div>
@@ -110,18 +114,18 @@ export default function CreateEvent(){
           <div className="info-event">
             <div id="local">
               <p>Local</p>
-              <input type="text" name="local" placeholder="Ex: YouTube" {...register('local')}/>
+              <input type="text" name="local" placeholder="Ex: YouTube" {...register('local')} defaultValue={event.local}/>
               {errors.local && <span>{errors.local.message}</span>}
             </div>
             <div id="type">
               <p>Tipo</p>
-              <input type="text" name="type" placeholder="Ex: Tecnologia" {...register('type')}/>
+              <input type="text" name="type" placeholder="Ex: Tecnologia" {...register('type')} defaultValue={event.type}/>
               {errors.type && <span>{errors.type.message}</span>}
             </div>
           </div>
           <div id="button-form">
             <button onClick={() => navigate(-1)} id="btn-cancel"> Cancelar </button>
-            <Button type="submit" onClick={() => clearErrors()} text="Criar Evento"/>
+            <Button type="submit" onClick={() => clearErrors()} text="Atualizar Evento"/>
           </div>
         </form>
       </main>
