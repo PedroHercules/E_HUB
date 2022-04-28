@@ -16,6 +16,10 @@ export default function Header(){
   const { handleLogout, authenticate, user } = useContext(Context);
   const navigate = useNavigate();
 
+  function redirectToProfile(){
+    navigate(`/profile/${user.nickname}`);
+  }
+
   function navigateToLogin(){
     navigate('/login');
   }
@@ -27,7 +31,7 @@ export default function Header(){
         {
           authenticate ?
           <div id="user-info">
-            <div id="profile">
+            <div onClick={() => {redirectToProfile()}} id="profile">
               <p>{user.nickname.toUpperCase()}</p>
             </div>
             <button id="logout" onClick={handleLogout}><LogoutIcon /></button>

@@ -2,23 +2,20 @@ import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Context } from '../context/Context.js';
 
-import { toast, ToastContainer } from 'react-toastify';
 
 import api from '../api';
 
 import Header from '../components/Header';
-import Button from '../components/Button';
 import ButtonCreateEvent from '../components/ButtonCreateEvent';
 
 import '../styles/Home.css';
 
-import "react-toastify/dist/ReactToastify.css";
 
 export function Home() {
 
   const [events, setEvents] = useState([]);
 
-  const { authenticate, user} = useContext(Context);
+  const { user } = useContext(Context);
 
   const navigate = useNavigate();
 
@@ -30,14 +27,6 @@ export function Home() {
     }
     getAllEvents();
   }, [])
-
-  function navigateToCreateEvent(){
-    if(authenticate){
-      navigate('/create-event');
-    }else{
-      toast.error('Erro: Logue na plataforma');
-    }
-  }
 
   function navigateToEventInfo(id, event){
     navigate(`/event/${id}`, { state: event });
@@ -56,7 +45,6 @@ export function Home() {
   return (
     <div id="home-page">
       <Header />
-      <ToastContainer />
       <section>
         <div id="home-aside">
           {/* <button className="active-btn"onClick={() => {navigateToCreateEvent()}}>
@@ -88,7 +76,7 @@ export function Home() {
           ))}
         </div>
       </section>
-      <ButtonCreateEvent onClick={() => {navigateToCreateEvent()}}/>
+      <ButtonCreateEvent />
     </div>
   );
 }

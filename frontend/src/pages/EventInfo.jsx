@@ -8,7 +8,6 @@ import { Context } from '../context/Context.js';
 import api from '../api.js';
 
 import { useNavigate, useLocation } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
 import Header from '../components/Header';
 import ButtonCreateEvent from '../components/ButtonCreateEvent';
 
@@ -43,14 +42,6 @@ export default function EventInfo(props) {
     );
   }
 
-  function navigateToCreateEvent(){
-    if(authenticate){
-      navigate('/create-event');
-    }else{
-      toast.error('Erro: Logue na plataforma');
-    }
-  }
-
   async function removeEvent(){
     let confirm = window.confirm(`Deseja deletar o evento ${event.title}?`);
     if(confirm){
@@ -69,7 +60,6 @@ export default function EventInfo(props) {
   return (
     <div id="page-info">
       <Header />
-      <ToastContainer />
       <section id="event-info">
         <div id="info-aside">
           <img src={eventObj.image} id="img" alt="Evento"/>
@@ -112,7 +102,7 @@ export default function EventInfo(props) {
         </div>
         
       </section>
-      <ButtonCreateEvent onClick={() => {navigateToCreateEvent()}}/>
+      <ButtonCreateEvent/>
     </div>
   );
 }

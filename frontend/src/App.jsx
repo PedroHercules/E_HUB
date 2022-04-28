@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import CreateEvent from './pages/CreateEvent';
 import EventInfo from './pages/EventInfo';
 import UpdateEvent from './pages/UpdateEvent';
+import Profile from './pages/Profile';
 
 import { AuthProvider } from "./context/Context";
 
@@ -22,6 +23,7 @@ function App() {
           <Route path='/registerUser' element={ <Register /> }/>
           <Route path='/create-event'element={ <CreateEvent /> }/>
           <Route path='/update-event'element={ <UpdateEvent /> }/>
+          <Route path='/profile/:nickname' element={ <Profile /> }/>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
