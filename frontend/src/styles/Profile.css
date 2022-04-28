@@ -19,12 +19,17 @@
   margin-top: 5%;
 }
 
+table{
+  width: 100%;
+}
+
 table th{
   background: #1A8FDD;
 }
 
-table, td {
+table, th, td {
   border: 1px solid #808080;
+  border-collapse: collapse;
 }
 
 table th{
@@ -32,14 +37,25 @@ table th{
 }
 
 table td{
-  width: 25%;
   height: 30px;
+  padding: 3px;
+}
+
+table button {
+  background: transparent;
+  border: none;
+  color: #1A8FDD;
+  cursor: pointer;
 }
 
 #profile-events{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+#profile-events div{
+  width: 100%;
 }
 
 #schedule-events{
