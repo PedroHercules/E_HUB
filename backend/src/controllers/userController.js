@@ -99,29 +99,58 @@ router.post('/authenticate', async (req, res) => {
   }
 });
 
-router.get('/profile', async (req, res) => {
-
+router.get('/profile/:id', async (req, res) => {
+  console.log('Entrou')
   try {
-    const userId = req.body.user;
+    const { id } = req.params;
     
-    const user = await User.findOne({ 
+    const user = await User.findOne( 
+      {
+        where: { id: id} ,
         include: [
           {
             model: Event,
-            where: {userId: userId}
+            include: [
+              {
+                model: User,
+                attributes: ['nickname']
+              }
+            ],
+            where: {userId: id}
           }
         ]
-      },
-      {where: { id: userId} }
-      );
+      }
+    );
     if (!user) {
       return res.status(400).send({ error: 'Erro ao buscar usuário' });
     }
     return res.status(200).send({ user });
   } catch (err) {
+    console.log(err)
     return res.status(400).send({ error: 'Ocorreu um erro ao carregar perfil' });
   }
   
+});
+
+
+router.post('/update', async (req, res) => {
+  try {
+    const { id, nickname, about, email } = req.body;
+    console.log(about)
+    await User.update(
+      {
+        nickname: nickname,
+        about: about,
+        email: email
+      },
+      {where:{id: id}}
+    )
+
+    return res.status(200).send({message: "Usuário atualizado"});
+  } catch (error) {
+    console.log(error);
+    return res.status(400).send({message: "Erro ao atualizar usuário"});
+  }
 });
 
 

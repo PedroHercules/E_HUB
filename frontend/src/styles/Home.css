@@ -82,7 +82,7 @@
   height: 50%;
 }
 
-#cardEvent img, h4, p{
+#cardEvent img, #cardEvent h4, #cardEvent p{
   margin-bottom: 5%;
 }
 

@@ -15,6 +15,11 @@ const User = connection.define('users', {
     allownull: false
   },
 
+  about: {
+    type: Sequelize.STRING,
+    defaultValue: "Escreva algo sobre você."
+  },
+
   password: {
     type: Sequelize.STRING,
     allownull: false

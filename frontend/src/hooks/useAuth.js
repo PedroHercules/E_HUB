@@ -41,6 +41,18 @@ export default function useAuth(){
     });
   }
 
+  async function handleUpdateUser({ id, nickname, about, email }){
+    console.log(about)
+    return await api.post('/user/update', {
+      "id": id,
+      "nickname": nickname,
+      "about": about,
+      "email": email
+    }).then(() => {
+      navigate(`/profile/${nickname}`)
+    });
+  }
+
   async function handleLogin({ nickname, password }){
     await api.post('/user/authenticate', {
       "nickname": nickname,
@@ -69,5 +81,5 @@ export default function useAuth(){
     navigate('/login');
   }
 
-  return { authenticate, handleLogin, handleLogout, handleRegister, user };
+  return { authenticate, handleLogin, handleLogout, handleRegister, handleUpdateUser, user };
 }

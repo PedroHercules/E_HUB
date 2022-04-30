@@ -8,6 +8,9 @@ import { Context } from '../context/Context.js';
 
 import Header from '../components/Header';
 import ButtonCreateEvent from '../components/ButtonCreateEvent';
+import EditUser from '../components/EditUser';
+
+import EditIcon from '@mui/icons-material/Edit';
 
 import '../styles/Profile.css';
 
@@ -23,12 +26,14 @@ export default function Profile(){
       await api.get(`/user/profile/${user.id}`)
         .then( (response) => {
           setOwner(response.data.user);
-          setEvents(response.data.user.events);
+          if (response.data.user.events){
+            setEvents(response.data.user.events)
+          }
         } )
     }
 
     getOwnerProfile();
-  }, []);
+  }, [owner]);
 
   function setDateLocal(date){
     return new Date(`${date}`).toLocaleString('pt-BR', { timeZone:  'America/Sao_Paulo'})
@@ -38,14 +43,28 @@ export default function Profile(){
     navigate(`/event/${id}`, { state: event });
   }
 
+  function navigateToEditUser(){
+    navigate('/profile/edit');
+  }
+
   return (
     <div id="profile-page">
       <Header />
       <section id="profile-info">
         <aside id="profile-user">
           <h2>{owner.nickname}</h2>
-          <p>Software Developer Intern at InspireIP</p>
-          <p>HTML | CSS | JavaScript | NodeJs | ReactJs | VueJs</p>
+          <br />
+          <h4>Contato</h4>
+          <p>{owner.email}</p>
+          <br />
+          <h4>Sobre</h4>
+          <p>{owner.about}</p>
+          <br />
+          {/* <button id="btn-update-user" onClick={() => {navigateToEditUser()}}>
+            <EditIcon className="icon"/>
+            Editar
+          </button> */}
+          <EditUser user={owner}/>
         </aside>
         <main id="profile-events">
           <div id="created-events">
@@ -101,4 +120,5 @@ export default function Profile(){
       <ButtonCreateEvent />
     </div>
   );
+
 }
