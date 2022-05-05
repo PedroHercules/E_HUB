@@ -90,6 +90,8 @@ export default function CustomizedDialogs(props) {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        maxWidth="sm"
+        fullWidth
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
           Editar usuário

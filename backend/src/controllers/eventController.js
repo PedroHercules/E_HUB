@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Event from '../database/Event.js';
+import Schedules from '../database/Schedules.js';
 import User from '../database/User.js';
 import {Op} from 'sequelize';
 
@@ -8,6 +9,11 @@ const router = Router();
 async function checkEvent(title){
   const event = await Event.findOne({ where: { title: title } });
   return event;
+}
+
+async function checkIfUserScheduleEvent(userId, eventId){
+  const schedule = await Schedules.findOne({ where: { userId: userId, eventId: eventId } });
+  return schedule;
 }
 
 router.post('/create', async (req, res) => {
@@ -149,5 +155,30 @@ router.get('/:id', async (req, res) => {
     return res.status(404).send({ error: 'Erro ao acessar rota de evento'});
   }
 });
+
+router.post('/schedule', async (req, res) => {
+  try {
+    const { userId, eventId, title, description, beginDate, endDate } = req.body;
+
+    if (await checkIfUserScheduleEvent(userId, eventId)){
+      return res.status(404).send({error: "Já agendou este evento"})
+    }
+
+    const schedule = await Schedules.create({
+      eventId: eventId,
+      userId: userId,
+      title: title,
+      description: description,
+      beginDate: beginDate,
+      endDate: endDate
+    });
+
+    return res.status(200).send({schedule})
+
+  } catch (err) {
+    console.log(err)
+    return res.status(404).send({error: "Ocorreu um problema ao agendar este evento"})
+  }
+})
 
 export default router;
