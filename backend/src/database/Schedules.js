@@ -1,5 +1,7 @@
 import { Sequelize } from 'sequelize';
 import connection  from './database.js';
+import User from './User.js';
+import Event from './Event.js';
 
 const Schedules = connection.define('schedules', {
   eventId: {
@@ -34,5 +36,10 @@ const Schedules = connection.define('schedules', {
 });
 
 Schedules.sync({force: false});
+
+User.hasMany(Schedules);
+Event.hasMany(Schedules);
+Schedules.belongsTo(User);
+Schedules.belongsTo(Event);
 
 export default Schedules;

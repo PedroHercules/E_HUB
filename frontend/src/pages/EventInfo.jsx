@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { Context } from '../context/Context.js';
 
@@ -13,7 +14,9 @@ import ButtonCreateEvent from '../components/ButtonCreateEvent';
 
 import '../styles/EventInfo.css';
 
-export default function EventInfo(props) {
+import "react-toastify/dist/ReactToastify.css";
+
+export default function EventInfo() {
   const location = useLocation();
   const eventObj = location.state;
   const [event, setEvent] = useState({});
@@ -54,19 +57,35 @@ export default function EventInfo(props) {
     }
   }
 
+  async function handleScheduleEvent() {
+    return await api.post('/event/schedule', {
+      eventId: eventObj.id,
+      userId: user.id,
+      title: eventObj.title,
+      description: eventObj.description,
+      beginDate: setDateLocal(eventObj.dateBegin),
+      endDate: setDateLocal(eventObj.dateEnd)
+    }).then( () => {
+      toast.success('Evento agendado')
+    }).catch(() => {
+      toast.error('Você agendou este evento')
+    })
+  }
+
   function setDateLocal(date){
     return new Date(`${date}`).toLocaleString('pt-BR', { timeZone:  'America/Sao_Paulo'})
   }
   return (
     <div id="page-info">
       <Header />
+      <ToastContainer />
       <section id="event-info">
         <div id="info-aside">
           <img src={eventObj.image} id="img" alt="Evento"/>
           <h2>{eventObj.title}</h2>
           <a id="link-event" href={event.link} target="_blank" rel="noreferrer">Ir para Evento</a>
           <div id="links-event">
-            <button className="btn-link" id="btn-schedule">
+            <button className="btn-link" id="btn-schedule" onClick={() => handleScheduleEvent()}>
               <AddCircleOutlineOutlinedIcon className="icon"/>
               Agendar Participação
             </button>

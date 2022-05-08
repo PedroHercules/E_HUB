@@ -173,11 +173,23 @@ router.post('/schedule', async (req, res) => {
       endDate: endDate
     });
 
-    return res.status(200).send({schedule})
+    return res.status(200).send({message: "Evento agendado"})
 
   } catch (err) {
     console.log(err)
     return res.status(404).send({error: "Ocorreu um problema ao agendar este evento"})
+  }
+})
+
+router.delete('/schedule-delete/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    await Schedules.destroy({ where: { id: id}})
+
+    return res.status(200).send();
+  } catch (err) {
+    return res.status(404).send({error: "Erro ao deletar evento"})
   }
 })
 

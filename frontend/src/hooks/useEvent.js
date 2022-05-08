@@ -26,7 +26,7 @@ export default function useEvent(){
     });
   }
 
-  async function handleUpdateEvent( { event } ){
+  async function handleUpdateEvent( { event, user } ){
     return await api.post('event/update', {
       "id": event.id,
       "title": event.title,
@@ -41,7 +41,7 @@ export default function useEvent(){
       "userId": event.userId
     }).then( (response) => {
       console.log(event)
-      navigate(`/`);
+      navigate(`/profile/${user}`);
     }).catch(err => {
       throw err.response.data;
     });

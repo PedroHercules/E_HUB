@@ -3,6 +3,12 @@ import api from '../api';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import EditIcon from '@mui/icons-material/Edit';
+
+import { toast, ToastContainer } from 'react-toastify';
+
 import { Context } from '../context/Context.js';
 
 
@@ -10,14 +16,15 @@ import Header from '../components/Header';
 import ButtonCreateEvent from '../components/ButtonCreateEvent';
 import EditUser from '../components/EditUser';
 
-import EditIcon from '@mui/icons-material/Edit';
-
 import '../styles/Profile.css';
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Profile(){
   const { authenticate, user } = useContext(Context);
   const [ owner, setOwner ] = useState({});
   const [ events, setEvents ] = useState([]);
+  const [ schedules, setSchedules ] = useState([]);
 
   const navigate = useNavigate();
 
@@ -29,6 +36,10 @@ export default function Profile(){
           if (response.data.user.events){
             setEvents(response.data.user.events)
           }
+
+          if(response.data.user.schedules) {
+            setSchedules(response.data.user.schedules)
+          }
         } )
     }
 
@@ -39,12 +50,43 @@ export default function Profile(){
     return new Date(`${date}`).toLocaleString('pt-BR', { timeZone:  'America/Sao_Paulo'})
   }
 
-  function navigateToEventInfo(id, event){
-    navigate(`/event/${id}`, { state: event });
+  function navigateToEventInfo(event){
+    if (!event) {
+      toast.error('Este evento não existe mais');
+      return;
+    }
+    navigate(`/event/${event.id}`, { state: event });
   }
 
-  function navigateToEditUser(){
-    navigate('/profile/edit');
+  async function removeEvent(event){
+    let confirm = window.confirm(`Deseja deletar o evento ${event.title}?`);
+    if(confirm){
+      return await api.delete(`/event/delete/${event.id}`)
+      .then( () => {
+        navigate(`/profile/${user.nickname}`);
+      }).catch( (err) => {
+        throw err.response.data;
+      })
+    }
+  }
+
+  async function removeScheduleEvent(schedule){
+    let confirm = window.confirm(`Deseja deletar o evento agendado ${schedule.title}?`);
+    if(confirm){
+      return await api.delete(`/event/schedule-delete/${schedule.id}`)
+      .then( () => {
+        navigate(`/profile/${user.nickname}`);
+      }).catch( (err) => {
+        throw err.response.data;
+      })
+    }
+  }
+
+  const toUpdateEvent = (event) => {
+    navigate(
+      '/update-event',
+      {state: event}
+    );
   }
 
   return (
@@ -60,61 +102,69 @@ export default function Profile(){
           <h4>Sobre</h4>
           <p>{owner.about}</p>
           <br />
-          {/* <button id="btn-update-user" onClick={() => {navigateToEditUser()}}>
-            <EditIcon className="icon"/>
-            Editar
-          </button> */}
+          
           <EditUser user={owner}/>
         </aside>
         <main id="profile-events">
           <div id="created-events">
             <h2>Eventos criados</h2>
-            <table>
-              <tr>
-                <th>Título</th>
-                <th>Início</th>
-                <th>Fim</th>
-                <th>Ação</th>
-              </tr>
+            <div className="columns">
+              <span>Título</span>
+              <span>Início</span>
+              <span>Final</span>
+              <span>Ação</span>
+            </div>
+            <div className="group-row">
               {
-                events.map( (event, index) => (
-                  <tr>
-                    <td>{event.title}</td>
-                    <td>{setDateLocal(event.dateBegin)}</td>
-                    <td>{setDateLocal(event.dateEnd)}</td>
-                    <td id="actions">
-                      <button onClick={() => {navigateToEventInfo(index, event)}}>Ver evento</button>
-                    </td>
-                  </tr>
-                ))
+                events.length > 0 ? (
+                  events.map( (event, index) => (
+                    <div className="row">
+                      <span>{event.title}</span>
+                      <span>{setDateLocal(event.dateBegin)}</span>
+                      <span>{setDateLocal(event.dateEnd)}</span>
+                      <span className="actions">
+                        <button className="btn-actions view" title="Visualizar evento" onClick={() => {navigateToEventInfo(event)}}> <OpenInNewIcon className="icon-btn"/> </button>
+                        <button className="btn-actions view" title="Visualizar evento" onClick={() => {toUpdateEvent(event)}}> <EditIcon className="icon-btn"/> </button>
+                        <button className="btn-actions remove" title="Remover evento" onClick={() => {removeEvent(event)}}> <RemoveCircleOutlineIcon className="icon-btn"/> </button>
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <h4>Não há eventos criados</h4>
+                )
               }
+            </div>
               
-            </table>
           </div>
           
-          {/* <div id="schedule-events">
+          <div id="schedule-events">
             <h2>Eventos agendados</h2>
-            <table>
-              <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Início</th>
-                <th>Fim</th>
-                <th>Ação</th>
-              </tr>
-              <tr>
-                <td>Javascript</td>
-                <td>Aula básica de Javascript</td>
-                <td>07/08/2022 14:00</td>
-                <td>07/08/2022 16:00</td>
-                <td>
-                  <button>Editar</button>
-                  <button>Excluir</button>
-                  <button>Ir</button>
-                </td>
-              </tr>
-            </table>
-          </div> */}
+            <div className="columns">
+              <span>Título</span>
+              <span>Início</span>
+              <span>Final</span>
+              <span>Ação</span>
+            </div>
+            <div className="group-row">
+              {
+                schedules.length > 0 ? (
+                  schedules.map( (schedule, index) => (
+                    <div className="row" key={index}>
+                      <span>{schedule.title}</span>
+                      <span>{schedule.beginDate}</span>
+                      <span>{schedule.endDate}</span>
+                      <span className="actions">
+                      <button className="btn-actions view" title="Visualizar evento" onClick={() => {navigateToEventInfo(schedule.event)}}> <OpenInNewIcon className="icon-btn"/> </button>
+                      <button className="btn-actions remove" title="Remover evento" onClick={() => {removeScheduleEvent(schedule)}}> <RemoveCircleOutlineIcon className="icon-btn"/> </button>
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <h4>Não há eventos agendados</h4>
+                )
+              }
+            </div> 
+          </div>
         </main>
       </section>
       <ButtonCreateEvent />

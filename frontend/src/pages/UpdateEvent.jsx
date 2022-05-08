@@ -27,7 +27,7 @@ const schema = yup.object().shape({
 export default function CreateEvent(props){
   const location = useLocation();
   const event  = location.state;
-  const { handleUpdateEvent } = useContext(Context);
+  const { handleUpdateEvent, user} = useContext(Context);
   
   const { register, handleSubmit, setError, clearErrors, formState: {errors} } = useForm({
     resolver: yupResolver(schema)
@@ -37,7 +37,8 @@ export default function CreateEvent(props){
   
   const updateEvent = async (data) => {
     const eventData = {
-      "event": data
+      "event": data,
+      "user": user.nickname
     }
 
     await handleUpdateEvent(eventData)

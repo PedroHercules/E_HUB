@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import User from '../database/User.js';
 import Event from '../database/Event.js';
+import Schedules from '../database/Schedules.js';
 import { Op } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
@@ -103,17 +104,34 @@ router.get('/profile/:id', async (req, res) => {
   console.log('Entrou')
   try {
     const { id } = req.params;
-    
+    console.log(id)
     const user = await User.findOne( 
       {
         where: { id: id} ,
         include: [
           {
             model: Event,
+            required: false,
             include: [
               {
                 model: User,
                 attributes: ['nickname']
+              }
+            ],
+            where: {userId: id}
+          },
+          {
+            model: Schedules,
+            required: false,
+            include: [
+              {
+                model: Event,
+                include: [
+                  {
+                    model: User,
+                    attributes: ['nickname']
+                  }
+                ]
               }
             ],
             where: {userId: id}
