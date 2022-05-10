@@ -32,7 +32,7 @@ export default function Header(){
           authenticate ?
           <div id="user-info">
             <div onClick={() => {redirectToProfile()}} id="profile">
-              <p>{user.nickname.toUpperCase()}</p>
+              <p>PERFIL</p>
             </div>
             <button id="logout" onClick={handleLogout}><LogoutIcon /></button>
           </div>

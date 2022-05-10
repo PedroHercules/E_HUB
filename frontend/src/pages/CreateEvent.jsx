@@ -64,64 +64,68 @@ export default function CreateEvent(){
       <main>
         <h1>Crie seu Evento</h1>
         <form onSubmit={handleSubmit(registerEvent)}>
-          <label>Título</label>
-          <input 
-            type="text" 
-            name="title" 
-            placeholder="Ex: Tecnologias mais usadas no desenvolvimento web"
-            {...register('title')}
-            />
-            {errors.title && toast.error(errors.title.message)}
-          <label>Descrição</label>
-          <input 
-            type="text" 
-            id="description" 
-            name="description" 
-            placeholder="Coloque aqui uma breve descrição do seu evento"
-            {...register('description')}
-            />
-            {errors.description && <span>{errors.description.message}</span>}
-          <label>Sobre</label>
-          <textarea 
-            id="about" 
-            name="about" 
-            placeholder="Coloque aqui uma descrição mais detalhada do evento"
-            {...register('about')}
-            />
-            {errors.about && <span>{errors.about.message}</span>}
-          <br />
-          <label>Link do evento</label>
-          <input type="url" name="link" placeholder="Coloque o link do evento aqui" {...register('link')} />
-          <label>Link da imagem</label>
-          <input type="url" name="image" placeholder="Coloque o link de uma imagem" {...register('image')} />
-          <div className="info-event">
-            <div id="date-inicio">
-              <p>Data de início</p>
-              <input type="datetime-local" name="dateBegin" {...register('dateBegin')}/>
-              {errors.dateBegin && <span>{errors.dateBegin.message}</span>}
-            </div>
-            <div id="date-fim">
-              <p>Data final</p>
-              <input type="datetime-local" name="dateEnd" {...register('dateEnd')}/>
-              {errors.dateEnd && <span>{errors.dateEnd.message}</span>}
-            </div>
+          <div id="first-info">
+            <label>Título</label>
+            <input 
+              type="text" 
+              name="title" 
+              placeholder="Ex: Tecnologias mais usadas no desenvolvimento web"
+              {...register('title')}
+              />
+              {errors.title && toast.error(errors.title.message)}
+            <label>Descrição</label>
+            <input 
+              type="text" 
+              id="description" 
+              name="description" 
+              placeholder="Coloque aqui uma breve descrição do seu evento"
+              {...register('description')}
+              />
+              {errors.description && <span>{errors.description.message}</span>}
+            <label>Sobre</label>
+            <textarea 
+              id="about" 
+              name="about" 
+              placeholder="Coloque aqui uma descrição mais detalhada do evento"
+              {...register('about')}
+              />
+              {errors.about && <span>{errors.about.message}</span>}
+            <br />
+            <label>Link do evento</label>
+            <input type="url" name="link" placeholder="Coloque o link do evento aqui" {...register('link')} />
+            <label>Link da imagem</label>
+            <input type="url" name="image" placeholder="Coloque o link de uma imagem" {...register('image')} />
           </div>
+          <div id="aside-info">
+            <div className="info-event">
+              <div id="date-inicio">
+                <p>Data de início</p>
+                <input type="datetime-local" name="dateBegin" {...register('dateBegin')}/>
+                {errors.dateBegin && <span>{errors.dateBegin.message}</span>}
+              </div>
+              <div id="date-fim">
+                <p>Data final</p>
+                <input type="datetime-local" name="dateEnd" {...register('dateEnd')}/>
+                {errors.dateEnd && <span>{errors.dateEnd.message}</span>}
+              </div>
+            </div>
 
-          <div className="info-event">
-            <div id="local">
-              <p>Local</p>
-              <input type="text" name="local" placeholder="Ex: YouTube" {...register('local')}/>
-              {errors.local && <span>{errors.local.message}</span>}
+            <div className="info-event">
+              <div id="local">
+                <p>Local</p>
+                <input type="text" name="local" placeholder="Ex: YouTube" {...register('local')}/>
+                {errors.local && <span>{errors.local.message}</span>}
+              </div>
+              <div id="type">
+                <p>Tipo</p>
+                <input type="text" name="type" placeholder="Ex: Tecnologia" {...register('type')}/>
+                {errors.type && <span>{errors.type.message}</span>}
+              </div>
             </div>
-            <div id="type">
-              <p>Tipo</p>
-              <input type="text" name="type" placeholder="Ex: Tecnologia" {...register('type')}/>
-              {errors.type && <span>{errors.type.message}</span>}
+            <div id="button-form">
+              <button onClick={() => navigate(-1)} id="btn-cancel"> Cancelar </button>
+              <Button type="submit" onClick={() => clearErrors()} text="Criar Evento"/>
             </div>
-          </div>
-          <div id="button-form">
-            <button onClick={() => navigate(-1)} id="btn-cancel"> Cancelar </button>
-            <Button type="submit" onClick={() => clearErrors()} text="Criar Evento"/>
           </div>
         </form>
       </main>

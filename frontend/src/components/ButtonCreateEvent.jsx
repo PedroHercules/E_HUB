@@ -27,9 +27,8 @@ export default function ButtonCreateEvent(props){
   return (
     <div>
       <ToastContainer />
-      <button onClick={() => {navigateToCreateEvent()}} id="active-btn">
-        <AddIcon id="icon"/>
-        Criar evento
+      <button title="Cria evento" onClick={() => {navigateToCreateEvent()}} id="active-btn">
+        <AddIcon id="icon" />
       </button>
     </div>
   );

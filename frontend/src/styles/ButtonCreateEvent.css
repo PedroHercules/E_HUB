@@ -1,19 +1,17 @@
 #active-btn{
-  height: 60px;
-  width: 160px;
-  border-radius: 20px;
-  font-size: 15pt;
+  height: 70px;
+  width: 70px;
+  border-radius: 10rem;
   font-weight: bold;
   cursor: pointer;
   color: #fff;
-  text-decoration: none;
   overflow: hidden;
   background: #ff0000;
   border: 2px solid #ff0000;
   transition: .2s;
   position: fixed;
   bottom: 2%;
-  left: 1%;
+  right: 1%;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -24,7 +22,10 @@
 }
 
 #icon{
-  display: inline-block;
-  margin-bottom: -5px;
-  margin-right: 4px;
+  position: absolute;
+  top: 27%;
+  left: 27%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
