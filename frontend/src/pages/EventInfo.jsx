@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Context } from '../context/Context.js';
 
@@ -13,8 +13,6 @@ import Header from '../components/Header';
 import ButtonCreateEvent from '../components/ButtonCreateEvent';
 
 import '../styles/EventInfo.css';
-
-import "react-toastify/dist/ReactToastify.css";
 
 export default function EventInfo() {
   const location = useLocation();
@@ -68,7 +66,7 @@ export default function EventInfo() {
     }).then( () => {
       toast.success('Evento agendado')
     }).catch( () => {
-      toast.error('Você agendou este evento')
+      toast.error('Você já agendou este evento')
     })
   }
 
@@ -78,14 +76,13 @@ export default function EventInfo() {
   return (
     <div id="page-info">
       <Header />
-      <ToastContainer />
       <section id="event-info">
         <div id="info-aside">
           <img src={eventObj.image} id="img" alt="Evento"/>
           <h2>{eventObj.title}</h2>
-          <a id="link-event" href={event.link} target="_blank" rel="noreferrer">Ir para Evento</a>
+          <a id="link-event" href={eventObj.link} target="_blank" rel="noopener noreferrer">Ir para Evento</a>
           <div id="links-event">
-            <button className="btn-link" id="btn-schedule" onClick={() => handleScheduleEvent()}>
+            <button className="btn-link" id="btn-schedule" onClick={handleScheduleEvent}>
               <AddCircleOutlineOutlinedIcon className="icon"/>
               Agendar Participação
             </button>

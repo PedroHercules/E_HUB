@@ -7,7 +7,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import EditIcon from '@mui/icons-material/Edit';
 
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Context } from '../context/Context.js';
 

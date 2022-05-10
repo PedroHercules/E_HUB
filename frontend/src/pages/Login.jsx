@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Link } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { Context } from '../context/Context.js';
 
@@ -40,7 +40,6 @@ export function Login(){
 
   return (
     <div id="page-auth">
-      <ToastContainer />
       <main id="info-user">
         <div id="title-login">
           <h1>E_HUB</h1>

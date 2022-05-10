@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -63,11 +63,10 @@ export default function CreateEvent(){
 
   return (
     <div id="create-event">
-      <ToastContainer />
       <Header />
       <main>
         <h1>Crie seu Evento</h1>
-        <form onSubmit={handleSubmit(registerEvent)}>
+        <form id="form-create-event"onSubmit={handleSubmit(registerEvent)}>
           <div id="first-info">
             <label>Título</label>
             <input 

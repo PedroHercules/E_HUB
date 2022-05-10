@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { BannerAside } from "../components/BannerAside";
 import Button from "../components/Button";
@@ -11,7 +11,6 @@ import Button from "../components/Button";
 import { Context } from '../context/Context.js';
 
 import '../styles/Login.css';
-import "react-toastify/dist/ReactToastify.css";
 
 const schema = yup.object().shape({
   nickname: yup.string().required('Esse campo é obrigatório'),
@@ -49,7 +48,6 @@ export default function Register() {
 
   return (
     <div id="page-auth">
-      <ToastContainer />
       <main id="info-user">
         <div id="title-login">
           <h1>E_HUB</h1>

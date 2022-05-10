@@ -1,8 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import Button from '../components/Button';
@@ -62,11 +62,10 @@ export default function CreateEvent(props){
   
   return (
     <div id="create-event">
-      <ToastContainer />
       <Header />
       <main>
         <h1>Editar Evento</h1>
-        <form onSubmit={handleSubmit(updateEvent)}>
+        <form id="form-create-event" onSubmit={handleSubmit(updateEvent)}>
           <input type="number" name="userId" defaultValue={event.userId} {...register('userId')} hidden/>
           <input type="text" name="user" defaultValue={event.user} {...register('user')} hidden/>
           <input type="number" name="id" defaultValue={event.id} {...register('id')} hidden/>

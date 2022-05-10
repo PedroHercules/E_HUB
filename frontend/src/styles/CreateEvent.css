@@ -10,7 +10,7 @@ main{
   text-align: center;
 }
 
-form{
+#form-create-event{
   display: flex;
   width: 100%;
   align-items: center;
