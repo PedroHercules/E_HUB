@@ -36,6 +36,10 @@ export default function CreateEvent(props){
   const navigate = useNavigate();
   
   const updateEvent = async (data) => {
+    if (Date.parse(data.dateBegin) >= Date.parse(data.dateEnd)) {
+      toast.error('A data final precisa ser maior que a data inicial')
+      return;
+    }
     const eventData = {
       "event": data,
       "user": user.nickname

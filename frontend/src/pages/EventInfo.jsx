@@ -67,7 +67,7 @@ export default function EventInfo() {
       endDate: setDateLocal(eventObj.dateEnd)
     }).then( () => {
       toast.success('Evento agendado')
-    }).catch(() => {
+    }).catch( () => {
       toast.error('Você agendou este evento')
     })
   }
